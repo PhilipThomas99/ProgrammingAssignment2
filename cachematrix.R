@@ -38,7 +38,7 @@ cacheSolve <- function(z, ...) {
     
     m_inv <- z$getinv() #first, we check whether there is inverse matrix cache for z or not
     if(!is.null(m_inv)) { #if cache is exist, then we print the results without recalculating the matrix
-        message("getting cached data") #this message is printed out to specify that we are getting the inverse from the cache
+        message("getting inverse from cache") #this message is printed out to specify that we are getting the inverse from the cache
         return(m_inv) #return the inverse matrix from the cache
         
     }
@@ -48,3 +48,41 @@ cacheSolve <- function(z, ...) {
     z$setinv(m_inv) #set m_inv in makeCacheMatrix to be equal to (calculated) m_inv in cacheSolve 
     return(m_inv) #show the result of inverse matrix
 }
+
+##Example to run the functions
+test_matrix <- matrix(runif(100,1,100),ncol = 10, nrow = 10) # make random 100 by 100 matrix from random uniform distribution between 1 and 100
+
+inst_z <- makeCacheMatrix(test_matrix) # instantiate the matrix
+
+message("First Run")
+print(cacheSolve(inst_z)) #run cacheSolve for inst_z the first time, the printed inverse matrix is not from cache, it is calculated.
+
+message("Second Run")
+print(cacheSolve(inst_z)) #run cacheSolve for inst_z the second time, the printed inverse matrix is from cache, "getting inverse from cache" is printed.
+
+## illustrate the use of "set" function
+test_matrix2 <- matrix(runif(100,1,100),ncol = 10, nrow = 10) # make second random matrix
+inst_z$set(test_matrix2) # change the matrix of inst_z into second random matrix
+
+message("First NEW Run")
+print(cacheSolve(inst_z)) #run cacheSolve for NEW inst_z the first time, the printed inverse matrix is not from cache, it is calculated.
+
+message("Second NEW Run")
+print(cacheSolve(inst_z)) #run cacheSolve for NEW inst_z the second time, the printed inverse matrix is from cache, "getting inverse from cache" is printed.
+
+#########################
+## Uncomment lines below to see the difference between caching inverse and not caching inverse. This case is inverting 100 by 100 matrix
+## non_cachetime save the results without caching and cachetime is when we get the result from cache
+## printout the non_cachetime and cachetime to see that cachetime is faster
+
+#test_matrix <- matrix(runif(10000,1,10000),ncol = 100, nrow = 100)
+
+#inst_z <- makeCacheMatrix(test_matrix)
+
+#proc_time1 <- proc.time()
+#print(cacheSolve(inst_z))
+#non_cachetime<- proc.time() - proc_time1
+
+#proc_time2 <- proc.time()
+#print(cacheSolve(inst_z))
+#cachetime <- proc.time() - proc_time2
