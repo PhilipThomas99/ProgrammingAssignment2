@@ -1,4 +1,5 @@
 ### In this file, I show that it is faster to use makeCacheMatrix rather than recalculate the inverse matrix many times ###
+### This file is just to illustrate that cache is faster, please refer to original cachematrix for grading purposes ###
 
 
 ## makeCacheMatrix function is used to initiate a list of function that we will used to cache the inverse of a matrix. 
