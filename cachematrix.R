@@ -1,4 +1,5 @@
 ### In this file, I wrote makeCacheMatrix function and cacheSolve function with brief example ###
+### Use this file for grading purposes, The cachematrixExample.R is just for illustration ###
 
 
 ## makeCacheMatrix function is used to initiate a list of function that we will used to cache the inverse of a matrix. 
